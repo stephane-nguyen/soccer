@@ -19,7 +19,7 @@ public class Club {
     private String[] soccerPlayers;
 
     private static List<Club> Clubs = Arrays.asList(
-            Club.builder().id(1).name("FC Barcelone").league("La Liga").build());
+            Club.builder().id(1).name("FC Barcelone").country("Spain").league("La Liga").build());
 
     public static Club getById(int id) {
         return Clubs.stream().filter(club -> Integer.valueOf(club.getId()).equals(id))

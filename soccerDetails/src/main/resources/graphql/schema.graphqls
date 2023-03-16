@@ -2,11 +2,39 @@ type Query {
   SoccerPlayerById(id: ID): SoccerPlayer
 }
 
+#return array of strikers
+query Strikers($role: Role!, $withClub: Boolean!) {
+  soccerPlayers(role: $role) {
+    firstname
+    lastname
+    club @include(if: $withClub) {
+      name
+    }
+  }
+}
+
+query SoccerPlayerNameAndClub($id: Int!, $withClub: Boolean!) {
+  soccerPlayer(id: $id) {
+    firstname
+    lastname
+    club @include(if: $withClub) {
+      name
+    }
+  }
+}
+
+mutation CreateReviewForPlayer($player: SoccerPlayer!, $review: ReviewInput!) {
+  createReview(soccerPlayer: $player, review: $review) {
+    stars
+    commentary
+  }
+}
+
 type SoccerPlayer {
   id: ID!
   firstname: String!
   lastname: String!
-  role: String!
+  role: soccerPlayerRoleEnum!
   score: Int!
   age: Int!
   nationality: String!
