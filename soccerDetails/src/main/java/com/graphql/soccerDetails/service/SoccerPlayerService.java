@@ -12,5 +12,7 @@ public interface SoccerPlayerService {
 
     List<SoccerPlayer> getGoalkeepers();
 
-    SoccerPlayer getSoccerPlayerById(int soccerPlayerId);
+    SoccerPlayer getSoccerPlayerById(Long soccerPlayerId);
+
+    SoccerPlayer createSoccerPlayer(SoccerPlayer soccerPlayer);
 }
