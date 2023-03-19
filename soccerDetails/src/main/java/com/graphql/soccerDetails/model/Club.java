@@ -1,28 +1,26 @@
 package com.graphql.soccerDetails.model;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Builder;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Club {
-    private int id;
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String name;
     private String country;
     private String league;
     private String stadium;
     private int numberOfTrophy;
     private String coach;
-    private String[] soccerPlayers;
-
-    private static List<Club> Clubs = Arrays.asList(
-            Club.builder().id(1).name("FC Barcelone").country("Spain").league("La Liga").build());
-
-    public static Club getById(int id) {
-        return Clubs.stream().filter(club -> Integer.valueOf(club.getId()).equals(id))
-                .findFirst().orElse(null);
-    }
+    private List<SoccerPlayer> soccerPlayers = new ArrayList<>();
 }

@@ -1,32 +1,31 @@
 package com.graphql.soccerDetails.model;
 
-import java.util.Arrays;
-import java.util.List;
+import com.graphql.soccerDetails.constant.SoccerPlayerAttributesEnum;
+import com.graphql.soccerDetails.constant.SoccerPlayerRoleEnum;
 
-import com.graphql.soccerDetails.constant.soccerPlayerRoleEnum;
-
-import lombok.Builder;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class SoccerPlayer {
-    private int id;
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String firstname;
     private String lastname;
-    private soccerPlayerRoleEnum role;
-    private int score;
+    private SoccerPlayerRoleEnum role;
+    private SoccerPlayerAttributesEnum attribute;
+    private float score; // TODO: mean of attributes in utils
     private int age;
+    private int salary;
+    private float height;
     private String nationality;
     private int clubId;
-
-    private static List<SoccerPlayer> SoccerPlayers = Arrays.asList(
-            SoccerPlayer.builder().id(1).firstname("Lionel").role(soccerPlayerRoleEnum.RW).lastname("Messi").clubId(1)
-                    .score(95).build());
-
-    public static SoccerPlayer getById(int id) {
-        return SoccerPlayers.stream().filter(soccerPlayer -> Integer.valueOf(soccerPlayer.getId()).equals(id))
-                .findFirst().orElse(null);
-    }
-
 }

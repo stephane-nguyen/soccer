@@ -1,42 +1,37 @@
 type Query {
-  SoccerPlayerById(id: ID): SoccerPlayer
+  soccerPlayerById(id: ID!): SoccerPlayer
+  soccers: [soccerPlayer]
+  strikers(role: Role!): [SoccerPlayer]
+  goalkeepers(role:Role!): [SoccerPlayer]
+  SoccerPlayerByNameAndClub(id: ID): SoccerPlayer
 }
 
-#return array of strikers
-query Strikers($role: Role!, $withClub: Boolean!) {
-  soccerPlayers(role: $role) {
-    firstname
-    lastname
-    club @include(if: $withClub) {
-      name
-    }
-  }
+type Mutation {
+  createReviewForPlayer($player: SoccerPlayer!, $review: ReviewInput!): SoccerPlayer
+  addClub(soccerPlayer: SoccerPlayer!): SoccerPlayer
+  addPlayer(soccerPlayer: AddPlayerInput): SoccerPlayer
 }
 
-query SoccerPlayerNameAndClub($id: Int!, $withClub: Boolean!) {
-  soccerPlayer(id: $id) {
-    firstname
-    lastname
-    club @include(if: $withClub) {
-      name
-    }
-  }
-}
+input AddPlayerInput{
+  firstname: String!
+  lastname: String!
+  clubId: ID!
+} 
 
-mutation CreateReviewForPlayer($player: SoccerPlayer!, $review: ReviewInput!) {
-  createReview(soccerPlayer: $player, review: $review) {
-    stars
-    commentary
-  }
+input ReviewInput{
+  text: String
 }
 
 type SoccerPlayer {
   id: ID!
   firstname: String!
   lastname: String!
-  role: soccerPlayerRoleEnum!
-  score: Int!
+  role: [soccerPlayerRoleEnum!]!
+  attribute: [SoccerPlayerAttributesEnum!]!
+  score: Float!
   age: Int!
+  salary: Int!
+  height: Float!
   nationality: String!
   club: Club
 }
@@ -45,26 +40,68 @@ type Club {
   id: ID!
   name: String!
   city: String!
-  league: String!
   country: String!
+  league: String!
   stadium: String!
   numberOfTrophy: Int!
   coach: String!
   soccerPlayers: [SoccerPlayer]!
 }
 
+enum SoccerPlayerAttributesEnum{
+  PAC # Pace
+  SHO # Shooting
+  PAS # Passing
+  DRI # Dribbling
+  DEF # Defence
+  PHY # Physical
+}
+
 enum soccerPlayerRoleEnum {
   LW # Left Wing
-  ST #Striker
-  CF #Centre Forward
+  ST # Striker
+  CF # Centre Forward
   RW # Right Wing
   RM # Right Midfielder
   CM # Centre Midfielder
-  CAM #Central Attacking Midfielder
-  CDM #Centre Defense Midfielder
+  CAM # Central Attacking Midfielder
+  CDM # Centre Defense Midfielder
   LM # Left Midfielder
-  RB #Right Back
-  CB #Centre Back
-  LB #Left Back
-  GK #GoalKeeper
+  RB # Right Back
+  CB # Centre Back
+  LB # Left Back
+  GK # GoalKeeper
 }
+
+
+"""
+return array of strikers
+"""
+# query Strikers($role: Role!, $withClub: Boolean!) {
+#   soccerPlayers(role: $role) {
+#     firstname
+#     lastname
+#     club @include(if: $withClub) {
+#       name
+#     }
+#   }
+# }
+
+# query SoccerPlayerByNameAndClub($id: ID!, $withClub: Boolean!) {
+#   soccerPlayer(id: $id) {
+#     firstname
+#     lastname
+#     club @include(if: $withClub) {
+#       name
+#     }
+#   }
+# }
+
+# mutation CreateReviewForPlayer($player: SoccerPlayer!, $review: ReviewInput!) {
+#   createReview(soccerPlayer: $player, review: $review) {
+#     stars
+#     commentary
+#   }
+# }
+
+
