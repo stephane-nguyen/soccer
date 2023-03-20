@@ -22,6 +22,13 @@ public class ClubServiceImpl implements ClubService {
     private final ClubRepository clubRepository;
 
     @Override
+    public Club createClub(Club club){
+        log.info("creating a club");
+        return this.clubRepository.save(club);
+    }
+
+
+    @Override
     public List<Club> getClubs(){
         log.info("Fetching all clubs");
         return this.clubRepository.findAll();
@@ -36,15 +43,15 @@ public class ClubServiceImpl implements ClubService {
 
     /**
      * TODO: exception when stadium not found
-     * @param stadium
+     * @param stadium string
      * @return Club's stadium name
      */
     @Override
     public Club getClubByStadium(@Argument String stadium){
         log.info("fetch a club by its stadium : {}", stadium);
         return this.clubRepository.findByStadium(stadium);
-
     }
+
 
 }
 

@@ -12,4 +12,5 @@ public interface ClubService {
 
     public Club getClubByStadium(@Argument String stadium);
 
+    public Club createClub(Club club);
 }
