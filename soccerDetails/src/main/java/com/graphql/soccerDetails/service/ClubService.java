@@ -13,4 +13,8 @@ public interface ClubService {
     public Club getClubByStadium(@Argument String stadium);
 
     public Club createClub(Club club);
+
+    public void deleteClub(Long id);
+
+    public Club updateClub(Club club);
 }

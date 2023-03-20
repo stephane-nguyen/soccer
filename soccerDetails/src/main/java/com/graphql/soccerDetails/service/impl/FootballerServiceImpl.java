@@ -25,12 +25,6 @@ public class FootballerServiceImpl implements FootballerService {
     private final FootballerRepository footballerRepository;
 
     @Override
-    public Footballer createFootballer(Footballer Footballer) {
-        log.info("Creating a footballer player");
-        return this.footballerRepository.save(Footballer);
-    }
-
-    @Override
     public List<Footballer> getFootballers() {
         log.info("Fetching all footballers");
         return this.footballerRepository.findAll();
@@ -42,6 +36,29 @@ public class FootballerServiceImpl implements FootballerService {
         log.info("Fetching footballer by id : {}", id);
         return this.footballerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Footballer not found"));
+    }
+
+    @Override
+    public Footballer createFootballer(Footballer Footballer) {
+        log.info("Creating a footballer player");
+        return this.footballerRepository.save(Footballer);
+    }
+
+    /**
+     * TODO
+     * @param footballer
+     * @return
+     */
+    @Override
+    public Footballer updateFootballer(Footballer footballer){
+        log.info("");
+        return null;
+    }
+
+    @Override
+    public void deleteFootballer(Long id){
+        log.info("deleting footballer ID: {}", id);
+        this.footballerRepository.deleteById(id);
     }
 
     private List<Footballer> filterFootballersByRole(FootballerRoleEnum role) {
@@ -63,5 +80,6 @@ public class FootballerServiceImpl implements FootballerService {
         log.info("Fetching all goalkeepers");
         return filterFootballersByRole(FootballerRoleEnum.GK);
     }
+
 
 }

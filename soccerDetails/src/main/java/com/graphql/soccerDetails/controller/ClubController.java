@@ -33,12 +33,13 @@ public class ClubController {
     public Club clubByStadium(@Argument String stadium){ return clubService.getClubByStadium(stadium);}
 
     @MutationMapping
-    public Club addClub(@Argument ClubInput clubinput){
-        Club club = new Club();
-        club.setName(club.getName());
-        club.setCity(club.getCity());
-        club.setLeague(club.getLeague());
-        return club;
+    public Club addClub(@Argument Club club){
+        return clubService.createClub(club);
+    }
+
+    @MutationMapping
+    public void deleteClubById(@Argument Long id){
+        clubService.deleteClub(id);
     }
 }
 

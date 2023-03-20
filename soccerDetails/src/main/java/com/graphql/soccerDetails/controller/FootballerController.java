@@ -42,12 +42,13 @@ public class FootballerController {
     }
 
     @MutationMapping
-    public Footballer addFootballer(@Argument PlayerInput player) {
-        Footballer newFootballer = new Footballer();
-        newFootballer.setFirstname(player.getFirstname());
-        newFootballer.setLastname(player.getLastname());
-        newFootballer.setClub(player.getClub());
-        return this.footballerService.createFootballer(newFootballer);
+    public Footballer addFootballer(Footballer footballer) {
+        return this.footballerService.createFootballer(footballer);
+    }
+
+    @MutationMapping
+    public void deleteFootballerById(@Argument Long id){
+        this.footballerService.deleteFootballer(id);
     }
 
 }

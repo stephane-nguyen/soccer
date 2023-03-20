@@ -6,13 +6,16 @@ import com.graphql.soccerDetails.model.Footballer;
 
 public interface FootballerService {
 
-    List<Footballer> getFootballers();
+    public List<Footballer> getFootballers();
 
-    List<Footballer> getStrikers();
+    public List<Footballer> getStrikers();
 
-    List<Footballer> getGoalkeepers();
+    public List<Footballer> getGoalkeepers();
 
-    Footballer getFootballerById(Long FootballerId);
+    public Footballer getFootballerById(Long footballerId);
 
-    Footballer createFootballer(Footballer Footballer);
+    public Footballer createFootballer(Footballer footballer);
+
+    public Footballer updateFootballer(Footballer footballer);
+    public void deleteFootballer(Long footballerId);
 }

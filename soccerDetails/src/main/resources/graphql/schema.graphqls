@@ -1,6 +1,6 @@
 type Query {
-  footballerById(id: ID!): Footballer
   footballers: [Footballer]
+  footballerById(id: ID!): Footballer
   strikers(player: Footballer!): [Footballer]
   goalkeepers(player:Footballer!): [Footballer]
 
@@ -10,16 +10,18 @@ type Query {
 }
 
 type Mutation {
-  addReview(player: Footballer!, review: ReviewInput!): Footballer
-  addFootballer(player: PlayerInput!): Footballer
+  addReview(player: FootballerInput!, review: ReviewInput!): Footballer
+  addFootballer(footballer: Footballer!): Footballer
+  updateFootballerAttributes(attribute: FootballerAttributesEnum!): Footballer
   deleteFootballerById(id: ID!): Footballer
 
   addClub(club: ClubInput!): Club
-  deleteClubById(id: ID!): Footballer
+ # updateClub():
+  deleteClubById(id: ID!): Club
 
 }
 
-input PlayerInput{
+input FootballerInput{
   firstname: String!
   lastname: String!
   club: Club

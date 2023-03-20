@@ -6,7 +6,6 @@ import com.graphql.soccerDetails.service.ClubService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +19,6 @@ public class ClubServiceImpl implements ClubService {
 
     @Autowired
     private final ClubRepository clubRepository;
-
-    @Override
-    public Club createClub(Club club){
-        log.info("creating a club");
-        return this.clubRepository.save(club);
-    }
-
 
     @Override
     public List<Club> getClubs(){
@@ -47,9 +39,32 @@ public class ClubServiceImpl implements ClubService {
      * @return Club's stadium name
      */
     @Override
-    public Club getClubByStadium(@Argument String stadium){
-        log.info("fetch a club by its stadium : {}", stadium);
+    public Club getClubByStadium(String stadium){
+        log.info("fetching a club by its stadium's name : {}", stadium);
         return this.clubRepository.findByStadium(stadium);
+    }
+
+    @Override
+    public Club createClub(Club club) {
+        log.info("creating a club");
+        return this.clubRepository.save(club);
+    }
+
+    /**
+     * TODO
+     * @param club
+     * @return
+     */
+    @Override
+    public Club updateClub(Club club){
+        log.info("updating club");
+        return null;
+    }
+
+    @Override
+    public void deleteClub(Long id){
+        log.info("deleting club ID : {}", id);
+        this.clubRepository.deleteById(id);;
     }
 
 
