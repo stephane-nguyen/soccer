@@ -34,6 +34,9 @@ public class Club {
     @Column(name = "country", nullable = false)
     private String country;
 
+    @Column(name="city", nullable = false)
+    private String city;
+
     @Column(name = "league")
     private String league;
 
