@@ -1,7 +1,7 @@
 package com.graphql.soccerDetails.model;
 
-import com.graphql.soccerDetails.constant.SoccerPlayerAttributesEnum;
-import com.graphql.soccerDetails.constant.SoccerPlayerRoleEnum;
+import com.graphql.soccerDetails.constant.FootballerAttributesEnum;
+import com.graphql.soccerDetails.constant.FootballerRoleEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "SoccerPlayer")
+@Entity(name = "Footballer")
 @Table
-public class SoccerPlayer {
+public class Footballer {
     @Id
     @SequenceGenerator(name = "player_sequence", sequenceName = "player_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "player_sequence")
@@ -36,10 +36,10 @@ public class SoccerPlayer {
     private String lastname;
 
     @Column(name = "role", nullable = false)
-    private SoccerPlayerRoleEnum role;
+    private FootballerRoleEnum role;
 
     @Column(name = "attribute", nullable = false)
-    private SoccerPlayerAttributesEnum attribute;
+    private FootballerAttributesEnum attribute;
 
     @Column(name = "score", nullable = false)
     private float score; // TODO: mean of attributes in utils

@@ -1,7 +1,7 @@
 package com.graphql.soccerDetails.controller;
 
 import com.graphql.soccerDetails.model.Club;
-import com.graphql.soccerDetails.model.SoccerPlayer;
+import com.graphql.soccerDetails.model.Footballer;
 import com.graphql.soccerDetails.service.ClubService;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.graphql.soccerDetails.constant;
 
-public enum SoccerPlayerRoleEnum {
+public enum FootballerRoleEnum {
     LW, // Left Wing
     ST, // Striker
     CF, // Centre Forward

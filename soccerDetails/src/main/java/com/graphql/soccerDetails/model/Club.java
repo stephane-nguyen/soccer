@@ -50,6 +50,6 @@ public class Club {
     private String coach;
 
     @OneToMany(mappedBy = "club")
-    @Column(name = "soccerPlayers", nullable = false)
-    private List<SoccerPlayer> soccerPlayers = new ArrayList<>();
+    @Column(name = "Footballers", nullable = false)
+    private List<Footballer> Footballers = new ArrayList<>();
 }

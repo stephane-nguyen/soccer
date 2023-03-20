@@ -36,7 +36,7 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public Club getClubById(Long id) {
-        log.info("Fetching soccer by id : {}", id);
+        log.info("Fetching club by id : {}", id);
         return this.clubRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Club not found"));
     }

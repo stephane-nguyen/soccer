@@ -5,12 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.graphql.soccerDetails.constant.SoccerPlayerAttributesEnum;
-import com.graphql.soccerDetails.constant.SoccerPlayerRoleEnum;
+import com.graphql.soccerDetails.constant.FootballerAttributesEnum;
+import com.graphql.soccerDetails.constant.FootballerRoleEnum;
 import com.graphql.soccerDetails.model.Club;
-import com.graphql.soccerDetails.model.SoccerPlayer;
+import com.graphql.soccerDetails.model.Footballer;
 import com.graphql.soccerDetails.repository.ClubRepository;
-import com.graphql.soccerDetails.repository.SoccerPlayerRepository;
+import com.graphql.soccerDetails.repository.FootballerRepository;
 
 @SpringBootApplication
 public class SoccerDetailsApplication {
@@ -20,7 +20,7 @@ public class SoccerDetailsApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(SoccerPlayerRepository soccerPlayerRepository, ClubRepository clubRepository) {
+	CommandLineRunner commandLineRunner(FootballerRepository footballerRepository, ClubRepository clubRepository) {
 		return args -> {
 			Club club1 = new Club(null, "FC Barcelona", "Spain", "Barcelona", "La Liga", "Camp Nou", 91, "Ronald Koeman", null);
 			clubRepository.save(club1);
@@ -28,17 +28,17 @@ public class SoccerDetailsApplication {
 					null);
 			clubRepository.save(club2);
 
-			SoccerPlayer player1 = new SoccerPlayer(null, "Lionel", "Messi", SoccerPlayerRoleEnum.ST,
-					SoccerPlayerAttributesEnum.SHO, 93.0f, 34, 25000000, 1.70f, "Argentina", club1);
-			soccerPlayerRepository.save(player1);
+			Footballer player1 = new Footballer(null, "Lionel", "Messi", FootballerRoleEnum.ST,
+					FootballerAttributesEnum.SHO, 93.0f, 34, 25000000, 1.70f, "Argentina", club1);
+			footballerRepository.save(player1);
 
-			SoccerPlayer player2 = new SoccerPlayer(null, "Cristiano", "Ronaldo", SoccerPlayerRoleEnum.ST,
-					SoccerPlayerAttributesEnum.PAC, 92.0f, 36, 30000000, 1.87f, "Portugal", club2);
-			soccerPlayerRepository.save(player2);
+			Footballer player2 = new Footballer(null, "Cristiano", "Ronaldo", FootballerRoleEnum.ST,
+					FootballerAttributesEnum.PAC, 92.0f, 36, 30000000, 1.87f, "Portugal", club2);
+			footballerRepository.save(player2);
 
-			SoccerPlayer player3 = new SoccerPlayer(null, "Neymar", "Jr.", SoccerPlayerRoleEnum.CF,
-					SoccerPlayerAttributesEnum.DRI, 90.0f, 29, 20000000, 1.75f, "Brazil", club2);
-			soccerPlayerRepository.save(player3);
+			Footballer player3 = new Footballer(null, "Neymar", "Jr.", FootballerRoleEnum.CF,
+					FootballerAttributesEnum.DRI, 90.0f, 29, 20000000, 1.75f, "Brazil", club2);
+			footballerRepository.save(player3);
 		};
 	}
 

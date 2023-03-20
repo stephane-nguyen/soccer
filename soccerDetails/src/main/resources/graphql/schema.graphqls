@@ -1,8 +1,8 @@
 type Query {
-  soccerPlayerById(id: ID!): SoccerPlayer
-  soccers: [SoccerPlayer]
-  strikers(player: SoccerPlayer!): [SoccerPlayer]
-  goalkeepers(player:SoccerPlayer!): [SoccerPlayer]
+  footballerById(id: ID!): Footballer
+  footballers: [Footballer]
+  strikers(player: Footballer!): [Footballer]
+  goalkeepers(player:Footballer!): [Footballer]
 
   clubs: [Club]
   clubById(id: ID!): Club
@@ -10,9 +10,13 @@ type Query {
 }
 
 type Mutation {
-  addReview(player: SoccerPlayer!, review: ReviewInput!): SoccerPlayer
+  addReview(player: Footballer!, review: ReviewInput!): Footballer
+  addFootballer(player: PlayerInput!): Footballer
+  deleteFootballerById(id: ID!): Footballer
+
   addClub(club: ClubInput!): Club
-  addSoccerPlayer(player: PlayerInput!): SoccerPlayer
+  deleteClubById(id: ID!): Footballer
+
 }
 
 input PlayerInput{
@@ -31,12 +35,12 @@ input ReviewInput{
   body: String
 }
 
-type SoccerPlayer {
+type Footballer {
   id: ID!
   firstname: String!
   lastname: String!
-  role: [soccerPlayerRoleEnum!]!
-  attribute: [SoccerPlayerAttributesEnum!]!
+  role: [FootballerRoleEnum!]!
+  attribute: [FootballerAttributesEnum!]!
   score: Float!
   age: Int!
   salary: Int!
@@ -54,10 +58,10 @@ type Club {
   stadium: String!
   numberOfTrophy: Int!
   coach: String!
-  soccerPlayers: [SoccerPlayer]!
+  Footballers: [Footballer]!
 }
 
-enum SoccerPlayerAttributesEnum{
+enum FootballerAttributesEnum{
   PAC # Pace
   SHO # Shooting
   PAS # Passing
@@ -66,7 +70,7 @@ enum SoccerPlayerAttributesEnum{
   PHY # Physical
 }
 
-enum soccerPlayerRoleEnum {
+enum FootballerRoleEnum {
   LW # Left Wing
   ST # Striker
   CF # Centre Forward
@@ -81,36 +85,5 @@ enum soccerPlayerRoleEnum {
   LB # Left Back
   GK # GoalKeeper
 }
-
-
-"""
-return array of strikers
-"""
-# query Strikers($role: Role!, $withClub: Boolean!) {
-#   soccerPlayers(role: $role) {
-#     firstname
-#     lastname
-#     club @include(if: $withClub) {
-#       name
-#     }
-#   }
-# }
-
-# query SoccerPlayerByNameAndClub($id: ID!, $withClub: Boolean!) {
-#   soccerPlayer(id: $id) {
-#     firstname
-#     lastname
-#     club @include(if: $withClub) {
-#       name
-#     }
-#   }
-# }
-
-# mutation CreateReviewForPlayer($player: SoccerPlayer!, $review: ReviewInput!) {
-#   createReview(soccerPlayer: $player, review: $review) {
-#     stars
-#     commentary
-#   }
-# }
 
 
