@@ -22,9 +22,9 @@ public class SoccerDetailsApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(SoccerPlayerRepository soccerPlayerRepository, ClubRepository clubRepository) {
 		return args -> {
-			Club club1 = new Club(null, "FC Barcelona", "Spain", "La Liga", "Camp Nou", 91, "Ronald Koeman", null);
+			Club club1 = new Club(null, "FC Barcelona", "Spain", "Barcelona", "La Liga", "Camp Nou", 91, "Ronald Koeman", null);
 			clubRepository.save(club1);
-			Club club2 = new Club(null, "Real Madrid", "Spain", "La Liga", "Santiago Bernabéu", 93, "Zinedine Zidane",
+			Club club2 = new Club(null, "Real Madrid", "Spain","Madrid", "La Liga", "Santiago Bernabéu", 93, "Zinedine Zidane",
 					null);
 			clubRepository.save(club2);
 

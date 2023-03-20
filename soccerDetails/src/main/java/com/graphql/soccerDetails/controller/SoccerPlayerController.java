@@ -32,6 +32,11 @@ public class SoccerPlayerController {
     }
 
     @QueryMapping
+    public List<SoccerPlayer> strikers(){
+        return soccerPlayerService.getStrikers();
+    }
+
+    @QueryMapping
     public List<SoccerPlayer> goalkeepers() {
         return soccerPlayerService.getGoalkeepers();
     }

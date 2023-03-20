@@ -26,6 +26,7 @@ public class SoccerPlayerServiceImpl implements SoccerPlayerService {
 
     @Override
     public SoccerPlayer createSoccerPlayer(SoccerPlayer soccerPlayer) {
+        log.info("Creating a soccer player");
         return this.soccerPlayerRepository.save(soccerPlayer);
     }
 
@@ -34,6 +35,7 @@ public class SoccerPlayerServiceImpl implements SoccerPlayerService {
         log.info("Fetching all soccers");
         return this.soccerPlayerRepository.findAll();
     }
+
 
     @Override
     public SoccerPlayer getSoccerPlayerById(Long id) {
@@ -52,11 +54,13 @@ public class SoccerPlayerServiceImpl implements SoccerPlayerService {
 
     @Override
     public List<SoccerPlayer> getStrikers() {
+        log.info("Fetching all strikers");
         return filterSoccerPlayersByRole(SoccerPlayerRoleEnum.ST);
     }
 
     @Override
     public List<SoccerPlayer> getGoalkeepers() {
+        log.info("Fetching all goalkeepers");
         return filterSoccerPlayersByRole(SoccerPlayerRoleEnum.GK);
     }
 
