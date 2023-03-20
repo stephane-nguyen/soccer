@@ -1,25 +1,34 @@
 type Query {
   soccerPlayerById(id: ID!): SoccerPlayer
-  soccers: [soccerPlayer]
-  strikers(role: Role!): [SoccerPlayer]
-  goalkeepers(role:Role!): [SoccerPlayer]
-  SoccerPlayerByNameAndClub(id: ID): SoccerPlayer
+  soccers: [SoccerPlayer]
+  strikers(player: SoccerPlayer!): [SoccerPlayer]
+  goalkeepers(player:SoccerPlayer!): [SoccerPlayer]
+
+  clubs: [Club]
+  clubById(id: ID!): Club
+  clubByStadium(club: ClubInput!): Club
 }
 
 type Mutation {
-  createReviewForPlayer($player: SoccerPlayer!, $review: ReviewInput!): SoccerPlayer
-  addClub(soccerPlayer: SoccerPlayer!): SoccerPlayer
-  addPlayer(soccerPlayer: AddPlayerInput): SoccerPlayer
+  addReview(player: SoccerPlayer!, review: ReviewInput!): SoccerPlayer
+  addClub(club: ClubInput!): Club
+  addSoccerPlayer(player: PlayerInput!): SoccerPlayer
 }
 
-input AddPlayerInput{
+input PlayerInput{
   firstname: String!
   lastname: String!
-  clubId: ID!
-} 
+  club: Club
+}
+
+input ClubInput{
+  name: String!
+  city: String!
+  league: String!
+}
 
 input ReviewInput{
-  text: String
+  body: String
 }
 
 type SoccerPlayer {
@@ -40,7 +49,7 @@ type Club {
   id: ID!
   name: String!
   city: String!
-  country: String!
+  country: String
   league: String!
   stadium: String!
   numberOfTrophy: Int!
