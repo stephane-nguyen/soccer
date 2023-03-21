@@ -1,17 +1,18 @@
 type Query {
   footballers: [Footballer]
   footballerById(id: ID!): Footballer
-  strikers(player: Footballer!): [Footballer]
-  goalkeepers(player:Footballer!): [Footballer]
+  strikers(player: FootballerInput!): [Footballer]
+  goalkeepers(player:FootballerInput!): [Footballer]
 
   clubs: [Club]
   clubById(id: ID!): Club
   clubByStadium(club: ClubInput!): Club
+  clubByName(club: ClubInput!): Club
 }
 
 type Mutation {
   addReview(player: FootballerInput!, review: ReviewInput!): Footballer
-  addFootballer(footballer: Footballer!): Footballer
+  addFootballer(footballer: FootballerInput!): Footballer
   updateFootballerAttributes(attribute: FootballerAttributesEnum!): Footballer
   deleteFootballerById(id: ID!): Footballer
 
@@ -19,22 +20,6 @@ type Mutation {
  # updateClub():
   deleteClubById(id: ID!): Club
 
-}
-
-input FootballerInput{
-  firstname: String!
-  lastname: String!
-  club: Club
-}
-
-input ClubInput{
-  name: String!
-  city: String!
-  league: String!
-}
-
-input ReviewInput{
-  body: String
 }
 
 type Footballer {
@@ -51,6 +36,16 @@ type Footballer {
   club: Club
 }
 
+input FootballerInput{
+  firstname: String!
+  lastname: String!
+  club: ClubInput
+}
+
+input ReviewInput{
+  body: String
+}
+
 type Club {
   id: ID!
   name: String!
@@ -61,6 +56,12 @@ type Club {
   numberOfTrophy: Int!
   coach: String!
   Footballers: [Footballer]!
+}
+
+input ClubInput{
+  name: String!
+  stadium: String!
+  league: String!
 }
 
 enum FootballerAttributesEnum{

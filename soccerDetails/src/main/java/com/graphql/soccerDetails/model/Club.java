@@ -28,7 +28,7 @@ public class Club {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "country", nullable = false)
@@ -40,7 +40,7 @@ public class Club {
     @Column(name = "league")
     private String league;
 
-    @Column(name = "stadium")
+    @Column(name = "stadium", unique = true)
     private String stadium;
 
     @Column(name = "numberOfTrophy")
@@ -52,4 +52,11 @@ public class Club {
     @OneToMany(mappedBy = "club")
     @Column(name = "Footballers", nullable = false)
     private List<Footballer> Footballers = new ArrayList<>();
+
+    //For addClub with arguments of ClubInput
+    public Club(String name, String stadium, String league){
+        this.name = name;
+        this.stadium = stadium;
+        this.league = league;
+    }
 }

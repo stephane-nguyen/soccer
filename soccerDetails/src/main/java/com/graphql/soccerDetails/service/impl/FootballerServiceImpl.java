@@ -3,6 +3,9 @@ package com.graphql.soccerDetails.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.graphql.soccerDetails.model.Club;
+import com.graphql.soccerDetails.model.FootballerInput;
+import com.graphql.soccerDetails.repository.ClubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,9 @@ public class FootballerServiceImpl implements FootballerService {
     @Autowired
     private final FootballerRepository footballerRepository;
 
+    @Autowired
+    private final ClubServiceImpl clubService;
+
     @Override
     public List<Footballer> getFootballers() {
         log.info("Fetching all footballers");
@@ -39,9 +45,14 @@ public class FootballerServiceImpl implements FootballerService {
     }
 
     @Override
-    public Footballer createFootballer(Footballer Footballer) {
-        log.info("Creating a footballer player");
-        return this.footballerRepository.save(Footballer);
+    public Footballer createFootballer(FootballerInput footballerInput) {
+        log.info("Creating the footballer player : {} ", footballerInput);
+
+        //can't use directly ClubInput to respect the Club attribute in Footballer class
+        Club club = clubService.getClubByStadium(footballerInput.getClubInput().getStadium());
+        Footballer footballer = new Footballer(footballerInput.firstname(), footballerInput.lastname(), club);
+
+        return this.footballerRepository.save(footballer);
     }
 
     /**
@@ -51,7 +62,7 @@ public class FootballerServiceImpl implements FootballerService {
      */
     @Override
     public Footballer updateFootballer(Footballer footballer){
-        log.info("");
+        log.info("updating footballer {}", footballer);
         return null;
     }
 

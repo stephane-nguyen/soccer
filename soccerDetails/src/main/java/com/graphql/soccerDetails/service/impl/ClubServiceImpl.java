@@ -1,6 +1,7 @@
 package com.graphql.soccerDetails.service.impl;
 
 import com.graphql.soccerDetails.model.Club;
+import com.graphql.soccerDetails.model.ClubInput;
 import com.graphql.soccerDetails.repository.ClubRepository;
 import com.graphql.soccerDetails.service.ClubService;
 import lombok.RequiredArgsConstructor;
@@ -45,9 +46,15 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public Club createClub(Club club) {
-        log.info("creating a club");
-        return this.clubRepository.save(club);
+    public Club getClubByName(String name){
+        log.info("fetching a club by its name {}", name);
+        return this.clubRepository.findByName(name);
+    }
+
+    @Override
+    public Club createClub(ClubInput club) {
+        log.info("creating the club : {}", club);
+        return this.clubRepository.save(new Club(club.name(), club.stadium(), club.league()));
     }
 
     /**

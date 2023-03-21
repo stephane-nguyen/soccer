@@ -3,6 +3,7 @@ package com.graphql.soccerDetails.service;
 import java.util.List;
 
 import com.graphql.soccerDetails.model.Footballer;
+import com.graphql.soccerDetails.model.FootballerInput;
 
 public interface FootballerService {
 
@@ -14,7 +15,7 @@ public interface FootballerService {
 
     public Footballer getFootballerById(Long footballerId);
 
-    public Footballer createFootballer(Footballer footballer);
+    public Footballer createFootballer(FootballerInput footballerInput);
 
     public Footballer updateFootballer(Footballer footballer);
     public void deleteFootballer(Long footballerId);

@@ -3,18 +3,15 @@ package com.graphql.soccerDetails.model;
 import com.graphql.soccerDetails.constant.FootballerAttributesEnum;
 import com.graphql.soccerDetails.constant.FootballerRoleEnum;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import com.graphql.soccerDetails.repository.ClubRepository;
+import com.graphql.soccerDetails.service.impl.ClubServiceImpl;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -56,8 +53,13 @@ public class Footballer {
     @Column(name = "nationality", nullable = false)
     private String nationality;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "club_id", referencedColumnName = "id")
-    @Column(name = "club", nullable = false)
     private Club club;
+
+    public Footballer(String firstname, String lastname, Club club){
+        this.firstname=firstname;
+        this.lastname=lastname;
+        this.club= club;
+    }
 }

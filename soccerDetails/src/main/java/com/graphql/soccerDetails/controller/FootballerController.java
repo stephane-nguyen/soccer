@@ -2,20 +2,19 @@ package com.graphql.soccerDetails.controller;
 
 import java.util.List;
 
+import com.graphql.soccerDetails.model.FootballerInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.graphql.soccerDetails.model.Club;
 import com.graphql.soccerDetails.model.Footballer;
 import com.graphql.soccerDetails.service.FootballerService;
-
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("api/footballer")
 public class FootballerController {
 
     @Autowired
@@ -23,27 +22,27 @@ public class FootballerController {
 
     @QueryMapping
     public Footballer FootballerById(@Argument Long id) {
-        return footballerService.getFootballerById(id);
+        return this.footballerService.getFootballerById(id);
     }
 
     @QueryMapping
     public List<Footballer> footballers() {
-        return footballerService.getFootballers();
+        return this.footballerService.getFootballers();
     }
 
     @QueryMapping
     public List<Footballer> strikers(){
-        return footballerService.getStrikers();
+        return this.footballerService.getStrikers();
     }
 
     @QueryMapping
     public List<Footballer> goalkeepers() {
-        return footballerService.getGoalkeepers();
+        return this.footballerService.getGoalkeepers();
     }
 
     @MutationMapping
-    public Footballer addFootballer(Footballer footballer) {
-        return this.footballerService.createFootballer(footballer);
+    public Footballer addFootballer(@Argument FootballerInput footballerInput) {
+        return this.footballerService.createFootballer(footballerInput);
     }
 
     @MutationMapping
@@ -53,10 +52,3 @@ public class FootballerController {
 
 }
 
-@Getter
-@Setter
-class PlayerInput {
-    private String firstname;
-    private String lastname;
-    private Club club;
-}
