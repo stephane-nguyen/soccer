@@ -5,11 +5,12 @@ import com.graphql.soccerDetails.model.ClubInput;
 import org.springframework.graphql.data.method.annotation.Argument;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClubService {
     public List<Club> getClubs();
 
-    public Club getClubById(Long clubId);
+    public Optional<Club> getClubById(Long clubId);
 
     public Club getClubByStadium(String stadium);
     public Club getClubByName(String name);

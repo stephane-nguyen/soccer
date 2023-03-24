@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,10 +29,10 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public Club getClubById(Long id) {
+    public Optional<Club> getClubById(Long id) {
         log.info("Fetching club by id : {}", id);
-        return this.clubRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Club not found"));
+        return Optional.ofNullable(this.clubRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Club id not found")));
     }
 
     /**
@@ -54,7 +55,7 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public Club createClub(ClubInput club) {
         log.info("creating the club : {}", club);
-        return this.clubRepository.save(new Club(club.name(), club.stadium(), club.league()));
+        return this.clubRepository.save(new Club(club.getName(), club.getStadium(), club.getLeague()));
     }
 
     /**

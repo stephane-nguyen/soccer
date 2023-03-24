@@ -50,8 +50,8 @@ public class Club {
     private String coach;
 
     @OneToMany(mappedBy = "club")
-    @Column(name = "Footballers", nullable = false)
-    private List<Footballer> Footballers = new ArrayList<>();
+    @Column(name = "footballers", nullable = false)
+    private List<Footballer> footballers = new ArrayList<>();
 
     //For addClub with arguments of ClubInput
     public Club(String name, String stadium, String league){

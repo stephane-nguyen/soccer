@@ -5,6 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public record ClubInput(String name, String stadium, String league){
+public class ClubInput{
+    private String name;
+    private String stadium;
+
+    private String league;
 }
 
