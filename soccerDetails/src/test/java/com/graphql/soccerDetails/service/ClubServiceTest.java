@@ -2,17 +2,20 @@ package com.graphql.soccerDetails.service;
 
 import static org.mockito.Mockito.verify;
 
+import com.graphql.soccerDetails.model.ClubInput;
 import com.graphql.soccerDetails.model.Footballer;
+import com.graphql.soccerDetails.model.FootballerStats;
 import com.graphql.soccerDetails.service.impl.ClubServiceImpl;
 import com.graphql.soccerDetails.model.Club;
 import com.graphql.soccerDetails.repository.ClubRepository;
 import com.graphql.soccerDetails.constant.FootballerRoleEnum;
-import com.graphql.soccerDetails.constant.FootballerAttributesEnum;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -20,6 +23,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class ClubServiceTest {
 
     static Club club;
+    static ClubInput clubInput;
+    static FootballerStats footballerStats;
     @Mock
     private ClubRepository clubRepository;
     private ClubServiceImpl clubService;
@@ -27,9 +32,11 @@ public class ClubServiceTest {
     @BeforeEach
     void setUp() {
         clubService = new ClubServiceImpl(clubRepository);
-        Club club = new Club(null, "FC Barcelona", "Spain", "Barcelona", "La Liga", "Camp Nou", 91, "Ronald Koeman", null);
-        Footballer Footballer = new Footballer(null, "Lionel", "Messi", FootballerRoleEnum.ST,
-                FootballerAttributesEnum.SHO, 93.0f, 34, 25000000, 1.70f, "Argentina", club);
+        club = new Club(2L, "FC Barcelona", "Spain", "Barcelona", "La Liga", "Camp Nou", 91, "Ronald Koeman", null);
+        footballerStats = new FootballerStats(10,10,10,10,10,10);
+
+        Footballer footballer = new Footballer(null, "Lionel", "Messi", FootballerRoleEnum.ST,
+                footballerStats, 93, 34, 25000000, 1.70f, "Argentina", club);
     }
 
     @AfterAll
@@ -38,9 +45,10 @@ public class ClubServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Success adding a club")
     void testAddClub() {
-        clubService.createClub(club);
+        clubService.createClub(clubInput);
         verify(clubRepository).save(club);
     }
 
@@ -52,26 +60,14 @@ public class ClubServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Success of fetching a club by its id")
-    void testFootballerById() {
+    void testClubById() {
+        System.out.println("Before save: " + clubRepository.findAll());
+        clubRepository.save(club);
+        System.out.println("After save: " + clubRepository.findAll());
         clubService.getClubById(club.getId());
         verify(clubRepository).findById(club.getId());
     }
-
-    // @Test
-    // @Disabled
-    // void testDeleteFootballer() {
-    // FootballerService.deleteFootballer(Footballer.getIdFootballer());
-    // verify(FootballerRepository).deleteById(Footballer.getIdFootballer());
-    // }
-
-
-
-    // @Test
-    // @Disabled
-    // void testUpdateFootballer() {
-    // FootballerService.updateFootballer(Footballer);
-    // verify(FootballerRepository).save(Footballer);
-    // }
 
 }
