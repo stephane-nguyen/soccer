@@ -5,5 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public record FootballerInput(String firstname, String lastname, ClubInput clubInput){
+public class FootballerInput{
+    private String firstname;
+    private String lastname;
+    private ClubInput clubInput;
 }

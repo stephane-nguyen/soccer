@@ -3,6 +3,7 @@ package com.graphql.soccerDetails.controller;
 import java.util.List;
 
 import com.graphql.soccerDetails.model.FootballerInput;
+import com.graphql.soccerDetails.model.FootballerStats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -14,7 +15,7 @@ import com.graphql.soccerDetails.service.FootballerService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("api/footballer")
+//@RequestMapping("api/footballer")
 public class FootballerController {
 
     @Autowired
@@ -48,6 +49,11 @@ public class FootballerController {
     @MutationMapping
     public void deleteFootballerById(@Argument Long id){
         this.footballerService.deleteFootballer(id);
+    }
+
+    @MutationMapping
+    public void updateFootballerStats(@Argument Long id, @Argument FootballerStats stats){
+        this.footballerService.updateFootballerStats(stats);
     }
 
 }

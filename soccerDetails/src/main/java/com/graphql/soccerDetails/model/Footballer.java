@@ -1,17 +1,15 @@
 package com.graphql.soccerDetails.model;
 
-import com.graphql.soccerDetails.constant.FootballerAttributesEnum;
 import com.graphql.soccerDetails.constant.FootballerRoleEnum;
-
-import com.graphql.soccerDetails.repository.ClubRepository;
-import com.graphql.soccerDetails.service.impl.ClubServiceImpl;
+import com.graphql.soccerDetails.utils.MathUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
+import java.util.ArrayList;
+
+import static com.graphql.soccerDetails.utils.MathUtils.mean;
 
 @Data
 @NoArgsConstructor
@@ -35,11 +33,12 @@ public class Footballer {
     @Column(name = "role", nullable = false)
     private FootballerRoleEnum role;
 
-    @Column(name = "attribute", nullable = false)
-    private FootballerAttributesEnum attribute;
+    @Column(name = "stats", nullable = false)
+    @Embedded
+    private FootballerStats stats;
 
     @Column(name = "score", nullable = false)
-    private float score; // TODO: mean of attributes in utils
+    private int score;
 
     @Column(name = "age", nullable = false)
     private int age;
@@ -54,7 +53,7 @@ public class Footballer {
     private String nationality;
 
     @ManyToOne
-    @JoinColumn(name = "club_id", referencedColumnName = "id")
+    @JoinColumn(name = "club_id", referencedColumnName = "id", nullable = false)
     private Club club;
 
     public Footballer(String firstname, String lastname, Club club){
@@ -62,4 +61,22 @@ public class Footballer {
         this.lastname=lastname;
         this.club= club;
     }
+
+    public void setScore(FootballerStats footballerStats){
+        this.score = calculateScore(footballerStats);
+    }
+
+    private int calculateScore(FootballerStats footballerStats) {
+
+        ArrayList<Integer> stats = new ArrayList<>();
+        stats.add(footballerStats.getPace());
+        stats.add(footballerStats.getShooting());
+        stats.add(footballerStats.getPassing());
+        stats.add(footballerStats.getDribbling());
+        stats.add(footballerStats.getDefence());
+        stats.add(footballerStats.getPhysical());
+
+        return MathUtils.mean(stats);
+    }
+
 }

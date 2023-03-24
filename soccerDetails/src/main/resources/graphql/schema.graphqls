@@ -1,6 +1,10 @@
 type Query {
   footballers: [Footballer]
   footballerById(id: ID!): Footballer
+
+  attackers(player: FootballerInput): [Footballer]
+  defenders(player: FootballerInput): [Footballer]
+  midfielders(player: FootballerInput): [Footballer]
   strikers(player: FootballerInput!): [Footballer]
   goalkeepers(player:FootballerInput!): [Footballer]
 
@@ -11,23 +15,24 @@ type Query {
 }
 
 type Mutation {
-  addReview(player: FootballerInput!, review: ReviewInput!): Footballer
   addFootballer(footballer: FootballerInput!): Footballer
-  updateFootballerAttributes(attribute: FootballerAttributesEnum!): Footballer
   deleteFootballerById(id: ID!): Footballer
 
   addClub(club: ClubInput!): Club
- # updateClub():
   deleteClubById(id: ID!): Club
-
+  #DOING
+  updateFootballerStats(id: ID!, stats: FootballerStatsInput!): Footballer
+  # TO DO
+  addReview(player: FootballerInput!, review: ReviewInput!): Footballer
+  updateFootballerClub(id: ID!, footballer: FootballerInput!): Footballer # need to update the Club footballers properties too
 }
 
 type Footballer {
   id: ID!
   firstname: String!
   lastname: String!
-  role: [FootballerRoleEnum!]!
-  attribute: [FootballerAttributesEnum!]!
+  role: FootballerRoleEnum!
+  attributes: [Footballer!]!
   score: Float!
   age: Int!
   salary: Int!
@@ -42,7 +47,18 @@ input FootballerInput{
   club: ClubInput
 }
 
+input FootballerStatsInput {
+  pace: Int
+  shooting: Int
+  passing: Int
+  dribbling: Int
+  defence: Int
+  physical: Int
+}
+
 input ReviewInput{
+  like: Int!
+  star: Int!
   body: String
 }
 
@@ -53,9 +69,9 @@ type Club {
   country: String
   league: String!
   stadium: String!
-  numberOfTrophy: Int!
-  coach: String!
-  Footballers: [Footballer]!
+  numberOfTrophy: Int
+  coach: String
+  footballers: [Footballer]!
 }
 
 input ClubInput{
@@ -64,24 +80,18 @@ input ClubInput{
   league: String!
 }
 
-enum FootballerAttributesEnum{
-  PAC # Pace
-  SHO # Shooting
-  PAS # Passing
-  DRI # Dribbling
-  DEF # Defence
-  PHY # Physical
-}
-
 enum FootballerRoleEnum {
+  #Attackers
   LW # Left Wing
   ST # Striker
   CF # Centre Forward
   RW # Right Wing
+  #Midfielders
   RM # Right Midfielder
   CM # Centre Midfielder
   CAM # Central Attacking Midfielder
   CDM # Centre Defense Midfielder
+  #Defenders
   LM # Left Midfielder
   RB # Right Back
   CB # Centre Back
