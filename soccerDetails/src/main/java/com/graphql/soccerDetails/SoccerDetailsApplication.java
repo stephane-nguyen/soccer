@@ -17,38 +17,32 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"com.graphql.soccerDetails"})
-@EntityScan("com.graphql.soccer.model.*")
-@EnableJpaRepositories(basePackages = "com.graphql.soccer.repository")
-public class SoccerDetailsApplication extends SpringBootServletInitializer {
+public class SoccerDetailsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SoccerDetailsApplication.class, args);
 	}
 
 	@Bean
-	CommandLineRunner run(FootballerRepository footballerRepository, ClubRepository clubRepository) {
+	CommandLineRunner commandLineRunner(FootballerRepository footballerRepository, ClubRepository clubRepository) {
 		return args -> {
-			Club club1 = new Club(null, "FC Barcelona", "Spain", "Barcelona", "La Liga", "Camp Nou", 91, "Ronald Koeman", null);
-			clubRepository.save(club1);
-			Club club2 = new Club(null, "Real Madrid", "Spain","Madrid", "La Liga", "Santiago Bernabéu", 93, "Zinedine Zidane",
-					null);
-			clubRepository.save(club2);
+			Footballer footballer1 = new Footballer("Lionel", "Messi", new Club("Paris Saint-Germain", "Parc des Princes", "Ligue 1"));
+			footballer1.setAge(34);
+			footballer1.setHeight(1.70f);
+			footballer1.setNationality("Argentina");
+			footballer1.setRole(FootballerRoleEnum.RW);
+			FootballerStats stats1 = new FootballerStats(95, 95, 95, 96, 39, 66);
+			footballer1.setStats(stats1);
+			footballer1.setScore(stats1);
 
-			FootballerStats fs1 = new FootballerStats(10,10,10,10,10,10);
-
-			Footballer player1 = new Footballer(null, "Lionel", "Messi", FootballerRoleEnum.ST,
-					fs1, 93, 34, 25000000, 1.70f, "Argentina", club1);
-			footballerRepository.save(player1);
-
-			Footballer player2 = new Footballer(null, "Cristiano", "Ronaldo", FootballerRoleEnum.ST,
-					fs1, 92, 36, 30000000, 1.87f, "Portugal", club2);
-			footballerRepository.save(player2);
-
-			Footballer player3 = new Footballer(null, "Neymar", "Jr.", FootballerRoleEnum.CF,
-					fs1, 90, 29, 20000000, 1.75f, "Brazil", club2);
-			footballerRepository.save(player3);
+			Footballer footballer2 = new Footballer("Cristiano", "Ronaldo", new Club("Manchester United", "Old Trafford", "Premier League"));
+			footballer2.setAge(37);
+			footballer2.setHeight(1.87f);
+			footballer2.setNationality("Portugal");
+			footballer2.setRole(FootballerRoleEnum.ST);
+			FootballerStats stats2 = new FootballerStats(88, 99, 85, 89, 34, 81);
+			footballer2.setStats(stats2);
+			footballer2.setScore(stats2);
 		};
 	}
-
 }
