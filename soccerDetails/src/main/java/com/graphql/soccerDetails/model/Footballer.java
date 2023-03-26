@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 
-import static com.graphql.soccerDetails.utils.MathUtils.mean;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,9 +16,7 @@ import static com.graphql.soccerDetails.utils.MathUtils.mean;
 @Table
 public class Footballer {
     @Id
-    @SequenceGenerator(name = "player_sequence", sequenceName = "player_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "player_sequence")
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
 
@@ -30,53 +26,54 @@ public class Footballer {
     @Column(name = "lastname", nullable = false)
     private String lastname;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private FootballerRoleEnum role;
 
-    @Column(name = "stats", nullable = false)
     @Embedded
+    @Column(name = "stats", nullable = false)
     private FootballerStats stats;
 
-    @Column(name = "score", nullable = false)
+    @Column(name = "score", columnDefinition = "int default 0")
     private int score;
 
-    @Column(name = "age", nullable = false)
+    @Column(name = "age")
     private int age;
 
     @Column(name = "salary")
     private int salary;
 
-    @Column(name = "height", nullable = false)
+    @Column(name = "height")
     private float height;
 
     @Column(name = "nationality", nullable = false)
     private String nationality;
 
-    @ManyToOne
-    @JoinColumn(name = "club_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "fk_club", referencedColumnName = "id")
     private Club club;
 
-    public Footballer(String firstname, String lastname, Club club){
-        this.firstname=firstname;
-        this.lastname=lastname;
-        this.club= club;
+    public Footballer(String firstname, String lastname, Club club) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.club = club;
     }
 
-    public void setScore(FootballerStats footballerStats){
+    public void setScore(FootballerStats footballerStats) {
         this.score = calculateScore(footballerStats);
     }
 
     private int calculateScore(FootballerStats footballerStats) {
 
-        ArrayList<Integer> stats = new ArrayList<>();
-        stats.add(footballerStats.getPace());
-        stats.add(footballerStats.getShooting());
-        stats.add(footballerStats.getPassing());
-        stats.add(footballerStats.getDribbling());
-        stats.add(footballerStats.getDefence());
-        stats.add(footballerStats.getPhysical());
+        ArrayList<Integer> allStats = new ArrayList<>();
+        allStats.add(footballerStats.getPace());
+        allStats.add(footballerStats.getShooting());
+        allStats.add(footballerStats.getPassing());
+        allStats.add(footballerStats.getDribbling());
+        allStats.add(footballerStats.getDefence());
+        allStats.add(footballerStats.getPhysical());
 
-        return MathUtils.mean(stats);
+        return MathUtils.mean(allStats);
     }
 
 }
